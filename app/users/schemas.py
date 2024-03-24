@@ -10,3 +10,7 @@ class SchemaRegisterUser(BaseModel):
     last_name: Optional[str] = None
     nickname: Optional[str] = None
 
+
+class SchemaLoginUser(BaseModel):
+    email: EmailStr
+    password: str

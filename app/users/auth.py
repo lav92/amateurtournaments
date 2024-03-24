@@ -3,6 +3,8 @@ from datetime import datetime, timedelta
 from jose import jwt
 from passlib.context import CryptContext
 
+from app.config import settings
+
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -26,7 +28,7 @@ def create_access_token(data: dict) -> str:
     Generates a JWT access token from the given data.
     """
     data_copy = data.copy()
-    expire = datetime.utcnow() + timedelta(days=3)
+    expire = datetime.utcnow() + timedelta(days=1)
     data_copy.update({'exp': expire})
-    encoded_jwt = jwt.encode(data_copy, key="fernvoirenvone", algorithm="HS256")
+    encoded_jwt = jwt.encode(data_copy, settings.SECRET_KEY, settings.ALGORITHM)
     return encoded_jwt
