@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Response, Request, Depends
+from fastapi import APIRouter, HTTPException, status, Response, Depends
 
 from app.users.schemas import SchemaRegisterUser, SchemaLoginUser
 from app.users.dao import UsersDAO

@@ -1,16 +1,24 @@
-# This is a sample Python script.
+import asyncio
+from app.teams.models import Team
+from app.teams.dao import TeamDAO
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from app.users.models import User
+from app.users.dao import UsersDAO
+
+from app.database import async_session_maker
+from sqlalchemy import select
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+async def test():
+    user: User = await UsersDAO.find_or_none(id=10)
+    team: Team = await TeamDAO.find_or_none(id=1)
+    print(user.email, team.title)
 
+    async with async_session_maker() as session:
+        team.members = user
+        query = select(Team).filter_by(id=1)
+         
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    print(type(async_session_maker))
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+asyncio.run(test())
