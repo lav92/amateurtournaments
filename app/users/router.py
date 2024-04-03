@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Response, Depends
+from fastapi import APIRouter, HTTPException, status, Response, Depends, Form, Request
 
 from app.users.schemas import SchemaRegisterUser, SchemaLoginUser
 from app.users.dao import UsersDAO
@@ -12,22 +12,56 @@ router = APIRouter(
 )
 
 
+# Frontend URLs
+@router.post("/join")
+async def join(
+        email: str = Form(),
+        password: str = Form(),
+        first_name: str = Form(),
+        last_name: str = Form(),
+        nickname: str = Form(),
+):
+    await UsersDAO.register_user(email, password, first_name, last_name, nickname)
+    return "done"
+
+
+@router.post("/enter")
+async def enter(
+        response: Response,
+        email: str = Form(),
+        password: str = Form()
+):
+    user: User = await UsersDAO.find_or_none(email=email)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Пользователь с таким email не зарегистрирован"
+        )
+    else:
+        password_is_valid = verify_password(password, user.hashed_password)
+        if not password_is_valid:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Неверный пароль"
+            )
+    access_token = create_access_token({'sub': str(user.id)})
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True
+    )
+    return "welcome"
+
+
+# API URLs
 @router.post('/register')
 async def register_user(user_data: SchemaRegisterUser):
-    existing_user = await UsersDAO.find_or_none(email=user_data.email)
-    if existing_user:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Пользователь с таким email уже зарегистрирован"
-        )
-    hashed_password = get_password_hash(user_data.password)
-    await UsersDAO.create(
-        email=user_data.email,
-        hashed_password=hashed_password,
-        first_name=user_data.first_name,
-        last_name=user_data.last_name,
-        nickname=user_data.nickname,
-
+    await UsersDAO.register_user(
+        user_data.email,
+        user_data.password,
+        user_data.first_name,
+        user_data.last_name,
+        user_data.nickname
     )
     return Response(
         status_code=status.HTTP_201_CREATED,
