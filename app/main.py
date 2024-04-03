@@ -1,17 +1,16 @@
-from typing import Optional
-
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Request, Depends
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 
 from app.users.router import router as user_router
 from app.teams.router import router as team_router
+from app.templates.templates import templates
+from app.users.dependencies import get_user
 
 app = FastAPI(
     title="Hello World",
 )
 
-templates = Jinja2Templates(directory='app/templates')
+# templates = Jinja2Templates(directory='app/templates')
 
 app.mount("/static", StaticFiles(directory="app/templates/static", html=True), name="static")
 
@@ -19,22 +18,16 @@ app.include_router(user_router)
 app.include_router(team_router)
 
 
-@app.get("/")
+@app.get("/", name="homepage")
 async def root(request: Request):
-    return templates.TemplateResponse(name='home.html', context={"request": request})
+    token = request.cookies.get("access_token")
+    if not token:
+        return templates.TemplateResponse(name='home.html', context={"request": request})
+    else:
+        user = await get_user(token=token)
+    return templates.TemplateResponse(name='home.html', context={"request": request, "user": user})
 
 
-@app.get("/register")
-async def register(request: Request):
-    return templates.TemplateResponse(name='registration.html', context={"request": request})
-
-
-@app.post('/join')
-async def join(
-        email: str = Form(),
-        password: str = Form(),
-        first_name: str = Form(),
-        last_name: str = Form(),
-        nickname: str = Form(),
-):
-    print(email, password, first_name, last_name, nickname)
+@app.get("/login", name="login")
+async def login(request: Request):
+    return templates.TemplateResponse(name='login.html', context={"request": request})

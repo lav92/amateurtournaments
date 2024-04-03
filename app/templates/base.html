@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Start your development with FoodHut landing page.">
     <meta name="author" content="Devcrud">
-    <title>FoodHut | Free Bootstrap 4.3.x template</title>
+    <title>Dota Wars</title>
 
     <!-- font icons -->
     <link rel="stylesheet" href="static/vendors/themify-icons/css/themify-icons.css">
@@ -26,34 +26,29 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#home">Home</a>
+                <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#about">About</a>
+                <a class="nav-link" href="#about">Join Us</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#gallary">Gallary</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#book-table">Book-Table</a>
-            </li>
+
         </ul>
         <div class="overlay text-white text-center">
             <h4 class="display-2 font-weight-bold my-3">DotaWars</h4>
         </div>
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#blog">Blog<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#testmonial">Reviews</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#contact">Contact Us</a>
-            </li>
-            <li class="nav-item">
-                <a href="components.html" class="btn btn-primary ml-xl-4">Components</a>
-            </li>
+            {% if user %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">{{ user.nickname }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/exit">Log out</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
