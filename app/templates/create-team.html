@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container" style="padding-top: 200px">
+        <!-- Inputs -->
+        <hr>
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <form action="/building_team" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input name="title" type="text" class="form-control" id="exampleFormControlInput1"
+                               placeholder="Enter name of team">
+                    </div>
+                    <div class="form-group">
+                        <input name="abbreviation" class="form-control" type="text" placeholder="Enter abbreviation">
+                    </div>
+
+                    <div class="form-group">
+                        <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                  placeholder="Enter description"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

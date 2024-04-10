@@ -1,32 +1,49 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Response
+from fastapi import APIRouter, Depends, HTTPException, status, Response, Request, Form
 
 from app.teams.schemas import SchemaCreateTeam
 from app.users.models import User
 from app.users.dependencies import get_user
 from app.teams.dao import TeamDAO
-from app.teams.models import Team
+from app.templates.templates import templates
 
 router = APIRouter(
-    prefix='/team',
+    prefix='',
     tags=['Команды']
 )
 
 
+# Frontend URLs
+@router.get("/create-team")
+async def create_team(request: Request):
+    return templates.TemplateResponse(name='create-team.html', context={"request": request})
+
+
+@router.post("/building_team")
+async def build_team(
+        request: Request,
+        title: str = Form(),
+        abbreviation: str = Form(),
+        description: str = Form(),
+        capitan: User = Depends(get_user),
+):
+    team = await TeamDAO.create_team(
+        title=title,
+        abbreviation=abbreviation,
+        description=description,
+        capitan=capitan.id,
+    )
+
+    return templates.TemplateResponse(name='home.html', context={"request": request, "team": team})
+
+
+# API URls
 @router.post('/create')
 async def create_team(team_data: SchemaCreateTeam, capitan: User = Depends(get_user)):
-    exiting_team = await TeamDAO.find_or_none(title=team_data.title)
-
-    if exiting_team:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail="Команда с таким названием уже существует"
-        )
-
-    await TeamDAO.create(
+    await TeamDAO.create_team(
         title=team_data.title,
         abbreviation=team_data.abbreviation,
         description=team_data.description,
-        capitan=capitan.id
+        capitan=capitan.id,
     )
 
     return Response(
