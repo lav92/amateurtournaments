@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container" style="padding-top: 200px">
+        <!-- Inputs -->
+        <hr>
+        <div class="row mt-5">
+            <div class="col-md-6">
+
+                <h2 class="components-section-title">{{ team.title }}</h2>
+                <hr>
+                <p>{{ team.description }}</p>
+                <hr>
+                <nav class="navbar navbar-expand-sm navbar-dark bg-success rounded shadow mb-3">
+                    <div class="container">
+                        <a class="navbar-brand" href="#">Capitan</a>
+                        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#about">{{ team.capitan }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+            <div class="col-md-6">
+                <nav class="navbar navbar-expand-sm navbar-dark bg-success rounded shadow mb-3">
+                    <div class="container">
+                        <a class="navbar-brand" href="#">Carry</a>
+                        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#about">{{ team.carry }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <nav class="navbar navbar-expand-sm navbar-dark bg-success rounded shadow mb-3">
+                    <div class="container">
+                        <a class="navbar-brand" href="#">Mid</a>
+                        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#about">{{ team.mid }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <nav class="navbar navbar-expand-sm navbar-dark bg-success rounded shadow mb-3">
+                    <div class="container">
+                        <a class="navbar-brand" href="#">Offlane</a>
+                        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#about">{{ team.offlane }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <nav class="navbar navbar-expand-sm navbar-dark bg-success rounded shadow mb-3">
+                    <div class="container">
+                        <a class="navbar-brand" href="#">Support</a>
+                        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#about">{{ team.support }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <nav class="navbar navbar-expand-sm navbar-dark bg-success rounded shadow mb-3">
+                    <div class="container">
+                        <a class="navbar-brand" href="#">Hard Support</a>
+                        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#about">{{ team.hard_support }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock %}

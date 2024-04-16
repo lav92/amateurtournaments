@@ -36,6 +36,15 @@ async def build_team(
     return templates.TemplateResponse(name='home.html', context={"request": request, "team": team})
 
 
+@router.get("/my_band")
+async def view_my_team(
+        request: Request,
+        user: User = Depends(get_user)
+):
+    team = await TeamDAO.get_my_team(user)
+    return templates.TemplateResponse(name='my-band.html', context={"request": request, "team": team})
+
+
 # API URls
 @router.post('/create')
 async def create_team(team_data: SchemaCreateTeam, capitan: User = Depends(get_user)):
@@ -48,5 +57,11 @@ async def create_team(team_data: SchemaCreateTeam, capitan: User = Depends(get_u
 
     return Response(
         status_code=status.HTTP_201_CREATED,
-        content=f"{team_data.title} успешно создана"
+        content=f"{team_data.title} успешно создана",
     )
+
+
+@router.get('/my-team')
+async def get_my_team(user: User = Depends(get_user)):
+    team = await TeamDAO.get_my_team(user)
+    return team
