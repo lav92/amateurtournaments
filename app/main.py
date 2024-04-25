@@ -5,6 +5,7 @@ from app.users.router import router as user_router
 from app.teams.router import router as team_router
 from app.templates.templates import templates
 from app.users.dependencies import get_user
+from app.teams.dao import TeamDAO
 
 app = FastAPI(
     title="Hello World",
@@ -25,7 +26,10 @@ async def root(request: Request):
         return templates.TemplateResponse(name='home.html', context={"request": request})
     else:
         user = await get_user(token=token)
-    return templates.TemplateResponse(name='home.html', context={"request": request, "user": user})
+    return templates.TemplateResponse(name='home.html', context={"request": request,
+                                                                 "user": user,
+                                                                 "team": await TeamDAO.get_my_team(user)
+                                                                 })
 
 
 @app.get("/login", name="login")

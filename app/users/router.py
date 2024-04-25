@@ -6,6 +6,7 @@ from app.users.auth import verify_password, create_access_token
 from app.users.models import User
 from app.users.dependencies import get_user
 from app.templates.templates import templates
+from app.teams.dao import TeamDAO
 
 router = APIRouter(
     prefix='',
@@ -47,7 +48,10 @@ async def enter(
                 detail="Неверный пароль"
             )
     access_token = create_access_token({'sub': str(user.id)})
-    response = templates.TemplateResponse(name='home.html', context={"request": request, "user": user})
+    response = templates.TemplateResponse(name='home.html', context={"request": request,
+                                                                     "user": user,
+                                                                     "team": await TeamDAO.get_my_team(user),
+                                                                     })
     response.set_cookie(
         key="access_token",
         value=access_token,

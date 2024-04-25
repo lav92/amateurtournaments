@@ -1,12 +1,13 @@
 from fastapi import HTTPException, status
 
-from sqlalchemy import select, or_
+from sqlalchemy import select, or_, update
 
 from app.database import async_session_maker
 
 from app.dao.base import BaseDAO
 from app.teams.models import Team
 from app.users.models import User
+from app.users.dao import UsersDAO
 
 
 class TeamDAO(BaseDAO):
@@ -26,7 +27,7 @@ class TeamDAO(BaseDAO):
             title=title,
             abbreviation=abbreviation,
             description=description,
-            capitan=capitan
+            capitan=capitan.id
         )
 
     @classmethod
