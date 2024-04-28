@@ -1,5 +1,10 @@
-main dict -> key "players" : list[dict]
+main dict -> key "players" : list[dict] ищем по стимайди key "steamAccountId"
+key "heroId" - int
 
+key "role" -> 0 - основа | 1 - саппорт | 2 - фул сапорт
+key "lane" -> 1 - изи | 2 - мид | 3 - хард
+
+key "isVictory" boolean
 key "numKills" - количество убиств
 key "numDeaths" - количество смертей
 key "numAssists" - количество асистов
@@ -12,8 +17,30 @@ key "imp" - уровень исполнения [-30:30]
 key "heroHealing" - лечение героев
 key "award" - награда за матч (1 - MVP, 2 - Best core, 3 - best supp )
 key "roamLane" - ганг других лайнов
-key
-key
+key "killEvents" - ???
+key "stats" dict -> key "heroDamageReport" dict -> key "dealtTotal" dict (нанесеный урон и прочее) -> key "physicalDamage"
+                                                                                              -> key "magicalDamage"
+                                                                                              -> key "pureDamage"
+                                                                                              -> key "stunCount" - количество станов
+                                                                                              -> key "stunDuration" время стана - 5952 = 59.52 seconds
+                                                                                              -> key "disableCount"
+                                                                                              -> key "disableDuration" так же как и станы
+                                                                                              -> key "slowCount"
+                                                                                              -> key "slowDuration" так же как и станы
+                                                     key "receivedTotal" (полученый урон) -> key "physicalDamage"
+                                                                                          -> key "magicalDamage"
+                                                                                          -> key "pureDamage"
+                                                      key "dealtSourceAbility" list[dict] {
+                                                                                            "abilityId": 5041,
+                                                                                              "count": 35,
+                                                                                              "amount": 5568 - damage
+                                                                                          }
+                                                     key "dealtSourceItem" list[dict]     {
+                                                                                            "itemId": 176,
+                                                                                            "count": 9,
+                                                                                            "amount": 1573
+                                                                                          }
+
 
 {
             "matchId": 7707584671,
