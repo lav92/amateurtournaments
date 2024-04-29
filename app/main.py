@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.users.router import router as user_router
 from app.teams.router import router as team_router
+from app.stats.router import router as stats_router
 from app.templates.templates import templates
 from app.users.dependencies import get_user
 from app.teams.dao import TeamDAO
@@ -17,6 +18,7 @@ app.mount("/static", StaticFiles(directory="app/templates/static", html=True), n
 
 app.include_router(user_router)
 app.include_router(team_router)
+app.include_router(stats_router)
 
 
 @app.get("/", name="homepage")

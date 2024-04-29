@@ -9,7 +9,7 @@ class UsersDAO(BaseDAO):
     model = User
 
     @classmethod
-    async def register_user(cls, email, password, first_name, last_name, nickname):
+    async def register_user(cls, email, password, first_name, last_name, nickname, steam_id):
         existing_user = await UsersDAO.find_or_none(email=email)
         if existing_user:
             raise HTTPException(
@@ -23,4 +23,5 @@ class UsersDAO(BaseDAO):
             first_name=first_name,
             last_name=last_name,
             nickname=nickname,
+            steam_id=int(steam_id),
         )

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container" style="padding-top: 200px">
+
+        <div class="row mt-5">
+            <div class="col-md-6"></div>
+            <div class="col-md-6" style="background-color: #1d2124">
+
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <p class="font-weight-bold text-muted">Nickname</p>
+                        </td>
+                        <td>
+                            <p class="text-primary">{{ user.nickname }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="font-weight-bold text-muted">Email</p>
+                        </td>
+                        <td>
+                            <p class="text-primary">{{ user.email }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="font-weight-bold text-muted">First Name</p>
+                        </td>
+                        <td>
+                            <p class="text-primary">{{ user.first_name }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="font-weight-bold text-muted">Last Name</p>
+                        </td>
+                        <td>
+                            <p class="text-primary">{{ user.last_name }}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="font-weight-bold text-muted">Steam ID</p>
+                        </td>
+                        <td>
+                            <p class="text-primary">{{ user.steam_id }}</p>
+                        </td>
+                    </tr>
+                    {% if role %}
+                        <tr>
+                            <td>
+                                <p class="font-weight-bold text-muted">Role</p>
+                            </td>
+                            <td>
+                                <p class="text-primary">{{ user.role }}</p>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+
+                <nav class="navbar navbar-expand-sm navbar-dark bg-info rounded shadow mb-3">
+                    <div class="container">
+                        <a class="navbar-brand" href="/my_stats">View my stats of matches</a>
+                    </div>
+                </nav>
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

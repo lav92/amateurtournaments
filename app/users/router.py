@@ -23,8 +23,9 @@ async def join(
         first_name: str = Form(),
         last_name: str = Form(),
         nickname: str = Form(),
+        steam_id: str = Form(),
 ):
-    await UsersDAO.register_user(email, password, first_name, last_name, nickname)
+    await UsersDAO.register_user(email, password, first_name, last_name, nickname, steam_id)
     return templates.TemplateResponse(name='login.html', context={"request": request})
 
 
@@ -65,6 +66,14 @@ async def logout(request: Request):
     response = templates.TemplateResponse(name='home.html', context={"request": request})
     response.delete_cookie(key="access_token")
     return response
+
+
+@router.get('/account')
+async def account(request: Request, user: User = Depends(get_user)):
+    return templates.TemplateResponse(name='account.html', context={"request": request,
+                                                                    "user": user,
+                                                                    "team": await TeamDAO.get_my_team(user),
+                                                                    })
 
 
 # API URLs

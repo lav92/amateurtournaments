@@ -1,5 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, BigInteger
 from app.database import Base
 
 
@@ -12,3 +11,5 @@ class User(Base):
     first_name = Column(String(255), nullable=True)
     last_name = Column(String(255), nullable=True)
     nickname = Column(String(255), nullable=True)
+    steam_id = Column(BigInteger, nullable=True, default=1)
+    role = Column(String(255), nullable=True)
