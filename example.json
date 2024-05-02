@@ -16,7 +16,7 @@ key "towerDamage" урон по таверам
 key "imp" - уровень исполнения [-30:30]
 key "heroHealing" - лечение героев
 key "award" - награда за матч (1 - MVP, 2 - Best core, 3 - best supp )
-key "roamLane" - ганг других лайнов
+
 key "stats" dict -> key "heroDamageReport" dict -> key "dealtTotal" dict (нанесеный урон и прочее) -> key "physicalDamage"
                                                                                               -> key "magicalDamage"
                                                                                               -> key "pureDamage"

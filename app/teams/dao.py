@@ -1,13 +1,12 @@
 from fastapi import HTTPException, status
 
-from sqlalchemy import select, or_, update
+from sqlalchemy import select, or_
 
 from app.database import async_session_maker
 
 from app.dao.base import BaseDAO
 from app.teams.models import Team
-from app.users.models import User
-from app.users.dao import UsersDAO
+from app.users.models import Users
 
 
 class TeamDAO(BaseDAO):
@@ -31,7 +30,7 @@ class TeamDAO(BaseDAO):
         )
 
     @classmethod
-    async def get_my_team(cls, user: User):
+    async def get_my_team(cls, user: Users):
         async with async_session_maker() as session:
             query = select(cls.model).filter(
                 or_(

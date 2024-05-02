@@ -1,12 +1,12 @@
 from fastapi import HTTPException, status
 
 from app.dao.base import BaseDAO
-from app.users.models import User
+from app.users.models import Users
 from app.users.auth import get_password_hash
 
 
 class UsersDAO(BaseDAO):
-    model = User
+    model = Users
 
     @classmethod
     async def register_user(cls, email, password, first_name, last_name, nickname, steam_id):

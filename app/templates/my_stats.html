@@ -6,7 +6,7 @@
             <form action="/retrive_stats" method="post" enctype="multipart/form-data">
                 <p>To get stats of match enter match ID below. When it's ready we will send an email</p>
                 <div class="form-group">
-                    <input name="match_id" type="email" class="form-control" id="exampleFormControlInput1"
+                    <input name="match_id" class="form-control" id="exampleFormControlInput1"
                            placeholder="Enter match ID">
                 </div>
 
@@ -14,5 +14,8 @@
             </form>
 
         </div>
+        {% for line in test_text %}
+            <p>{{ line }}</p>
+        {% endfor %}
     </div>
 {% endblock %}

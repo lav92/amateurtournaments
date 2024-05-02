@@ -1,46 +1,149 @@
-import requests
-
-"""
-    open dota api
-"""
-# url_match = "https://api.opendota.com/api/matches/7707960268"
+# """
+#     stratz api
+#     token - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdWJqZWN0IjoiYTgzM2QwOTEtNzFlZS00MWIzLWJiZjUtMDllYTAxZjYyNTA1IiwiU3RlYW1JZCI6IjEyMzMwNDUwNjQiLCJuYmYiOjE3MTQyNDI5NzcsImV4cCI6MTc0NTc3ODk3NywiaWF0IjoxNzE0MjQyOTc3LCJpc3MiOiJodHRwczovL2FwaS5zdHJhdHouY29tIn0.WAk48WeRVjCcO1r3cFVxwOKH9u4PwhN3ix64a-72uS4
+# """
+# import aiohttp
+# import asyncio
 #
-# url_request_match = "https://api.opendota.com/api/request/7707960268"
-# url_job = "https://api.opendota.com/api/request/196559881"
+# BASE_URL = "https://api.stratz.com"
 #
-# parsed = "https://api.opendota.com/api/parsedMatches"
-# # response = requests.get(url_match)
-# # response_req = requests.post(url_request_match) #{"job":{"jobId":196559881}}
-# response = requests.get(url_job)
+# ABILITY_URL = f"{BASE_URL}/api/v1/Ability"
+# GAME_VERSION_URL = f"{BASE_URL}/api/v1/GameVersion"
+# HERO_URL = f"{BASE_URL}/api/v1/Hero"
+# ITEM_URL = f"{BASE_URL}/api/v1/Item"
+# MATCH_URL = f"{BASE_URL}/api/v1/match/7707584671"
+# LANG_URL = f"{BASE_URL}/api/v1/Language"
+# PLAYER_URL = f"{BASE_URL}/api/v1/Player"
 #
-# # print(response_req.text)
-# # print(response.text)
-# print(response, response.text, response.content, sep='\n')
+# HEADERS = {
+#     "Authorization": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdWJqZWN0IjoiYTgzM2QwOTEtNzFlZS00MWIzLWJiZjUtMDllYTAxZjYyNTA1IiwiU3RlYW1JZCI6IjEyMzMwNDUwNjQiLCJuYmYiOjE3MTQyNDI5NzcsImV4cCI6MTc0NTc3ODk3NywiaWF0IjoxNzE0MjQyOTc3LCJpc3MiOiJodHRwczovL2FwaS5zdHJhdHouY29tIn0.WAk48WeRVjCcO1r3cFVxwOKH9u4PwhN3ix64a-72uS4"}
 #
-# response_parse = requests.get(parsed)
+# my_steam_id = 1233045064
 #
-# print(response_parse.text)
-
-"""
-    stratz api
-    token - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdWJqZWN0IjoiYTgzM2QwOTEtNzFlZS00MWIzLWJiZjUtMDllYTAxZjYyNTA1IiwiU3RlYW1JZCI6IjEyMzMwNDUwNjQiLCJuYmYiOjE3MTQyNDI5NzcsImV4cCI6MTc0NTc3ODk3NywiaWF0IjoxNzE0MjQyOTc3LCJpc3MiOiJodHRwczovL2FwaS5zdHJhdHouY29tIn0.WAk48WeRVjCcO1r3cFVxwOKH9u4PwhN3ix64a-72uS4
-"""
-
-BASE_URL = "https://api.stratz.com"
-
-ABILITY_URL = f"{BASE_URL}/api/v1/Ability"
-GAME_VERSION_URL = f"{BASE_URL}/api/v1/GameVersion"
-HERO_URL = f"{BASE_URL}/api/v1/Hero"
-ITEM_URL = f"{BASE_URL}/api/v1/Item"
-MATCH_URL = f"{BASE_URL}/api/v1/match/7707584671"
-LANG_URL = f"{BASE_URL}/api/v1/Language"
-PLAYER_URL = f"{BASE_URL}/api/v1/Player"
-
-HEADERS = {
-    "Authorization": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJTdWJqZWN0IjoiYTgzM2QwOTEtNzFlZS00MWIzLWJiZjUtMDllYTAxZjYyNTA1IiwiU3RlYW1JZCI6IjEyMzMwNDUwNjQiLCJuYmYiOjE3MTQyNDI5NzcsImV4cCI6MTc0NTc3ODk3NywiaWF0IjoxNzE0MjQyOTc3LCJpc3MiOiJodHRwczovL2FwaS5zdHJhdHouY29tIn0.WAk48WeRVjCcO1r3cFVxwOKH9u4PwhN3ix64a-72uS4"}
-
-my_steam_id = "1233045064"
-
-response = requests.get(MATCH_URL, headers=HEADERS)
-
-print(response, response.text, response.content, '\n')
+#
+# def define_role(role: int, lane: int) -> str:
+#     if role == 2:
+#         return "full support"
+#     elif role == 1:
+#         return "support"
+#     else:
+#         if lane == 1:
+#             return "carry"
+#         elif lane == 2:
+#             return "mid"
+#         else:
+#             return "offlane"
+#
+#
+# def define_award(award: int) -> str:
+#     award_dict = {
+#         0: "no award",
+#         1: "MVP",
+#         2: "Best Core",
+#         3: "Best Support",
+#     }
+#     return award_dict.get(award)
+#
+#
+# async def get_hero_name(hero_id: str) -> str:
+#     async with aiohttp.ClientSession() as session:
+#         async with session.get(HERO_URL, headers=HEADERS) as response:
+#             full_data = await response.json()
+#             return full_data.get(hero_id).get("displayName")
+#
+#
+# async def retrive_ability_damage(raw_data: list[dict]) -> str:
+#     if not raw_data:
+#         return "No data"
+#     result_data = ""
+#     async with aiohttp.ClientSession() as session:
+#         async with session.get(ABILITY_URL, headers=HEADERS) as response:
+#             ability_data = await response.json()
+#             for ability in raw_data:
+#                 name = ability_data.get(str(ability.get("abilityId"))).get("language").get("displayName")
+#                 result_data += f'{name}({ability.get("count")}) - {ability.get("amount")}\n'
+#     return result_data[:-1]
+#
+#
+# async def retrive_items_damage(raw_data: list[dict]) -> str:
+#     if not raw_data:
+#         return "No data"
+#     result_data = ""
+#     async with aiohttp.ClientSession() as session:
+#         async with session.get(ITEM_URL, headers=HEADERS) as response:
+#             items_data = await response.json()
+#             for item in raw_data:
+#                 name = items_data.get(str(item.get("itemId"))).get("language").get("displayName")
+#                 result_data += f'{name}({item.get("count")}) - {item.get("amount")}\n'
+#     return result_data[:-1]
+#
+#
+# async def main():
+#     async with aiohttp.ClientSession() as session:
+#         async with session.get(MATCH_URL, headers=HEADERS) as response:
+#             print("Status:", response.status)
+#             print("Content-type:", response.headers['content-type'])
+#
+#             full_data = await response.json()
+#             user_stats = None
+#             for player in full_data.get("players"):
+#                 if player.get("steamAccountId") == my_steam_id:
+#                     user_stats = player
+#                     break
+#             valuable_data = {
+#                 "hero": await get_hero_name(hero_id=str(user_stats.get("heroId"))),
+#                 "role": define_role(role=user_stats.get("role"), lane=user_stats.get("lane")),
+#                 "result": "Win" if user_stats.get("isVictory") else "Lose",
+#                 "kills": user_stats.get("numKills"),
+#                 "deaths": user_stats.get("numDeaths"),
+#                 "assists": user_stats.get("numAssists"),
+#                 "gpm": user_stats.get("goldPerMinute"),
+#                 "epm": user_stats.get("experiencePerMinute"),
+#                 "gold_spent": user_stats.get("goldSpent"),
+#                 "hero_damage": user_stats.get("heroDamage"),
+#                 "tower_damage": user_stats.get("towerDamage"),
+#                 "imp": user_stats.get("imp"),
+#                 "hero_healing": user_stats.get("heroHealing"),
+#                 "award": define_award(award=user_stats.get("award")),
+#
+#                 "deal_physical_damage": user_stats.get("stats").get("heroDamageReport").get("dealtTotal").get(
+#                     "physicalDamage"),
+#                 "deal_magic_damage": user_stats.get("stats").get("heroDamageReport").get("dealtTotal").get(
+#                     "magicalDamage"),
+#                 "deal_pure_damage": user_stats.get("stats").get("heroDamageReport").get("dealtTotal").get("pureDamage"),
+#                 "stun_count": user_stats.get("stats").get("heroDamageReport").get("dealtTotal").get("stunCount"),
+#                 "stun_duration": round(
+#                     user_stats.get("stats").get("heroDamageReport").get("dealtTotal").get("stunDuration") / 100,
+#                     2
+#                 ),
+#                 "disable_count": user_stats.get("stats").get("heroDamageReport").get("dealtTotal").get("disableCount"),
+#                 "disable_duration": round(
+#                     user_stats.get("stats").get("heroDamageReport").get("dealtTotal").get("disableDuration") / 100,
+#                     2
+#                 ),
+#                 "slow_count": user_stats.get("stats").get("heroDamageReport").get("dealtTotal").get("slowCount"),
+#                 "slow_duration": round(
+#                     user_stats.get("stats").get("heroDamageReport").get("dealtTotal").get("slowDuration") / 100,
+#                     2
+#                 ),
+#
+#                 "received_physical_damage": user_stats.get("stats").get("heroDamageReport").get("receivedTotal").get(
+#                     "physicalDamage"),
+#                 "received_magic_damage": user_stats.get("stats").get("heroDamageReport").get("receivedTotal").get(
+#                     "magicalDamage"),
+#                 "received_pure_damage": user_stats.get("stats").get("heroDamageReport").get("receivedTotal").get(
+#                     "pureDamage"),
+#
+#                 "deal_ability_damage": await retrive_ability_damage(
+#                     raw_data=user_stats.get("stats").get("heroDamageReport").get("dealtSourceAbility")),
+#
+#                 "deal_item_damage": await retrive_items_damage(
+#                     raw_data=user_stats.get("stats").get("heroDamageReport").get("dealtSourceItem")
+#                 ),
+#             }
+#
+#             for key, value in valuable_data.items():
+#                 print(f"{key}: {value}")
+#
+#
+# asyncio.run(main())

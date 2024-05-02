@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status, Response, Request, Form
 
 from app.teams.schemas import SchemaCreateTeam
-from app.users.models import User
+from app.users.models import Users
 from app.users.dao import UsersDAO
 from app.users.dependencies import get_user
 from app.teams.dao import TeamDAO
@@ -25,7 +25,7 @@ async def build_team(
         title: str = Form(),
         abbreviation: str = Form(),
         description: str = Form(),
-        capitan: User = Depends(get_user),
+        capitan: Users = Depends(get_user),
 ):
     team = await TeamDAO.create_team(
         title=title,
@@ -43,7 +43,7 @@ async def build_team(
 @router.get("/my_band")
 async def view_my_team(
         request: Request,
-        user: User = Depends(get_user)
+        user: Users = Depends(get_user)
 ):
     team = await TeamDAO.get_my_team(user)
     print(team.capitan)
@@ -58,9 +58,9 @@ async def view_my_team(
 async def invite_carry(
         request: Request,
         carry_email: str = Form(),
-        user: User = Depends(get_user)
+        user: Users = Depends(get_user)
 ):
-    carry: User = await UsersDAO.find_or_none(email=carry_email)
+    carry: Users = await UsersDAO.find_or_none(email=carry_email)
     team = await TeamDAO.get_my_team(user)
     updated_team = await TeamDAO.update(pk_object=team.id, mid=carry.id)
     return templates.TemplateResponse(name='my-band.html', context={"request": request,
@@ -73,9 +73,9 @@ async def invite_carry(
 async def invite_mid(
         request: Request,
         mid_email: str = Form(),
-        user: User = Depends(get_user)
+        user: Users = Depends(get_user)
 ):
-    mid: User = await UsersDAO.find_or_none(email=mid_email)
+    mid: Users = await UsersDAO.find_or_none(email=mid_email)
     team = await TeamDAO.get_my_team(user)
     updated_team = await TeamDAO.update(pk_object=team.id, mid=mid.id)
     return templates.TemplateResponse(name='my-band.html', context={"request": request,
@@ -88,9 +88,9 @@ async def invite_mid(
 async def invite_offlane(
         request: Request,
         offlane_email: str = Form(),
-        user: User = Depends(get_user)
+        user: Users = Depends(get_user)
 ):
-    invited_user: User = await UsersDAO.find_or_none(email=offlane_email)
+    invited_user: Users = await UsersDAO.find_or_none(email=offlane_email)
     team = await TeamDAO.get_my_team(user)
     updated_team = await TeamDAO.update(pk_object=team.id, offlane=invited_user.id)
     return templates.TemplateResponse(name='my-band.html', context={"request": request,
@@ -103,9 +103,9 @@ async def invite_offlane(
 async def invite_support(
         request: Request,
         support_email: str = Form(),
-        user: User = Depends(get_user)
+        user: Users = Depends(get_user)
 ):
-    invited_user: User = await UsersDAO.find_or_none(email=support_email)
+    invited_user: Users = await UsersDAO.find_or_none(email=support_email)
     team = await TeamDAO.get_my_team(user)
     updated_team = await TeamDAO.update(pk_object=team.id, support=invited_user.id)
     return templates.TemplateResponse(name='my-band.html', context={"request": request,
@@ -118,9 +118,9 @@ async def invite_support(
 async def invite_hard_support(
         request: Request,
         hard_support_email: str = Form(),
-        user: User = Depends(get_user)
+        user: Users = Depends(get_user)
 ):
-    invited_user: User = await UsersDAO.find_or_none(email=hard_support_email)
+    invited_user: Users = await UsersDAO.find_or_none(email=hard_support_email)
     team = await TeamDAO.get_my_team(user)
     updated_team = await TeamDAO.update(pk_object=team.id, hard_support=invited_user.id)
     return templates.TemplateResponse(name='my-band.html', context={"request": request,
@@ -131,7 +131,7 @@ async def invite_hard_support(
 
 # API URls
 @router.post('/create')
-async def create_team(team_data: SchemaCreateTeam, capitan: User = Depends(get_user)):
+async def create_team(team_data: SchemaCreateTeam, capitan: Users = Depends(get_user)):
     await TeamDAO.create_team(
         title=team_data.title,
         abbreviation=team_data.abbreviation,
@@ -146,6 +146,6 @@ async def create_team(team_data: SchemaCreateTeam, capitan: User = Depends(get_u
 
 
 @router.get('/my-team')
-async def get_my_team(user: User = Depends(get_user)):
+async def get_my_team(user: Users = Depends(get_user)):
     team = await TeamDAO.get_my_team(user)
     return team
