@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="container" style="padding-top: 200px">
-        <div class="row mt-5">
+        <div class="row mt-4">
 
             <form action="/retrive_stats" method="post" enctype="multipart/form-data">
                 <p>To get stats of match enter match ID below. When it's ready we will send an email</p>
@@ -14,8 +14,74 @@
             </form>
 
         </div>
-        {% for line in test_text %}
-            <p>{{ line }}</p>
-        {% endfor %}
+
     </div>
+{% endblock %}
+
+{% block about %}
+
+    <div class="container">
+        <div class="row mt-5">
+
+            <table class="table table-borderless v-align-center">
+                <tbody>
+                {% for match in user_stats %}
+                    <tr>
+                        <td>
+                            <p class="font-weight-bold text-muted">{{ match[0].hero }} {{ match[0].result }} {{ match[0].role }}:</p>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>KDA - {{ match[0].kills }}/{{ match[0].deaths }}/{{ match[0].assists }}</li>
+                                <li>GPM - {{ match[0].gpm }} ExpPM - {{ match[0].epm }}</li>
+                                <li>Gold spent - {{ match[0].gold_spent }}</li>
+                                <li>Hero damage - {{ match[0].hero_damage }}</li>
+                                <li>Tower damage - {{ match[0].tower_damage }}</li>
+                                <li>Efficiency - {{ match[0].imp }}</li>
+                                <li>Heal - {{ match[0].hero_healing }}</li>
+                                <li>Award - {{ match[0].award }}</li>
+                                <li>Deal damage</li>
+                                <ul>
+                                    <li>Physical - {{ match[0].deal_physical_damage }}</li>
+                                    <li>Magical - {{ match[0].deal_magic_damage }}</li>
+                                    <li>Pure - {{ match[0].deal_pure_damage }}</li>
+                                </ul>
+                                <li>Stun - {{ match[0].stun_count }}({{ match[0].stun_duration }}sec)</li>
+                                <li>Disable - {{ match[0].disable_count }}({{ match[0].disable_duration }}sec)</li>
+                                <li>Slow - {{ match[0].slow_count }}({{ match[0].slow_duration }}sec)</li>
+                                <li>Received damage</li>
+                                <ul>
+                                    <li>Physical - {{ match[0].received_physical_damage }}</li>
+                                    <li>Magical - {{ match[0].received_magic_damage }}</li>
+                                    <li>Pure - {{ match[0].received_pure_damage }}</li>
+                                </ul>
+                                <li>Deal ability damage</li>
+                                {% set abilities = match[0].deal_ability_damage.split('\n') %}
+                                <ul>
+                                    {% for ability in abilities %}
+                                        <li>
+                                            {{ ability }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <li>Deal item damage</li>
+                                {% set items = match[0].deal_item_damage.split('\n') %}
+                                <ul>
+                                    {% for item in items %}
+                                        <li>
+                                            {{ item }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
 {% endblock %}

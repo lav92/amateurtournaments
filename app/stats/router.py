@@ -4,6 +4,7 @@ from app.users.models import Users
 from app.users.dependencies import get_user
 from app.teams.dao import TeamDAO
 from app.stats.services import get_match_stats
+from app.stats.dao import StatsDAO
 
 from app.templates.templates import templates
 
@@ -15,9 +16,11 @@ router = APIRouter(
 
 @router.get('/my_stats')
 async def my_stats(request: Request, user: Users = Depends(get_user)):
+    user_stats = await StatsDAO.find_all(user_id=user.id)
     return templates.TemplateResponse(name='my_stats.html', context={"request": request,
                                                                      "user": user,
                                                                      "team": await TeamDAO.get_my_team(user),
+                                                                     "user_stats": user_stats,
                                                                      })
 
 
