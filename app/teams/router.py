@@ -62,7 +62,7 @@ async def invite_carry(
 ):
     carry: Users = await UsersDAO.find_or_none(email=carry_email)
     team = await TeamDAO.get_my_team(user)
-    updated_team = await TeamDAO.update(pk_object=team.id, mid=carry.id)
+    updated_team = await TeamDAO.update(pk_object=team.id, carry=carry.id)
     return templates.TemplateResponse(name='my-band.html', context={"request": request,
                                                                     "team": updated_team,
                                                                     "user": user,
@@ -127,6 +127,15 @@ async def invite_hard_support(
                                                                     "team": updated_team,
                                                                     "user": user,
                                                                     })
+
+
+@router.get('/all_filled_teams')
+async def all_filled_teams(
+        request: Request,
+):
+    res = await TeamDAO.get_filled_teams()
+    print(res)
+    return res
 
 
 # API URls

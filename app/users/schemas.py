@@ -14,3 +14,12 @@ class SchemaRegisterUser(BaseModel):
 class SchemaLoginUser(BaseModel):
     email: EmailStr
     password: str
+
+
+class SchemaReturnUser(BaseModel):
+    email: EmailStr
+    first_name: str
+    last_name: str
+    nickname: str
+    steam_id: int
+    role: str

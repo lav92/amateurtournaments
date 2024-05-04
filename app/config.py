@@ -14,6 +14,11 @@ class Settings(BaseSettings):
 
     STRATZ_TOKEN: str = Field(env='STRATZ_TOKEN')
 
+    CELERY_BROKER: str = Field(env='CELERY_BROKER')
+
+    SMPT_LOGIN: str = Field(env='SMPT_LOGIN')
+    SMTP_PASSWORD: str = Field(env='SMTP_PASSWORD')
+
     model_config = SettingsConfigDict(env_file='.env', env_file_encoding='utf-8')
 
 

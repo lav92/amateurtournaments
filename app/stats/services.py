@@ -3,6 +3,7 @@ import aiohttp
 from app.config import settings
 from app.stats.dao import StatsDAO
 
+
 BASE_URL = "https://api.stratz.com"
 
 ABILITY_URL = f"{BASE_URL}/api/v1/Ability"

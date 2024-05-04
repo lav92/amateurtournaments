@@ -5,6 +5,7 @@ from app.users.dependencies import get_user
 from app.teams.dao import TeamDAO
 from app.stats.services import get_match_stats
 from app.stats.dao import StatsDAO
+from app.tasks.tasks import get_stats
 
 from app.templates.templates import templates
 
@@ -30,8 +31,7 @@ async def retrive_stats(
         match_id: str = Form(),
         user: Users = Depends(get_user),
 ):
-
-    await get_match_stats(user_id=user.id, match_id=match_id, steam_id=user.steam_id)
+    get_stats.delay(user_id=user.id, match_id=match_id, steam_id=user.steam_id, user_email=user.email)
     return templates.TemplateResponse(name='home.html', context={"request": request,
                                                                  "user": user,
                                                                  "team": await TeamDAO.get_my_team(user),

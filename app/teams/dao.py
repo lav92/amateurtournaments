@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 
-from sqlalchemy import select, or_
+from sqlalchemy import select, or_, and_
 
 from app.database import async_session_maker
 
@@ -45,3 +45,19 @@ class TeamDAO(BaseDAO):
 
             team = await session.execute(query)
             return team.scalar_one_or_none()
+
+    @classmethod
+    async def get_filled_teams(cls):
+        async with async_session_maker() as session:
+            query = select(cls.model).filter(
+                and_(
+                    cls.model.capitan > 0,
+                    cls.model.carry > 0,
+                    cls.model.mid > 0,
+                    cls.model.offlane > 0,
+                    cls.model.support > 0,
+                    cls.model.hard_support > 0,
+                )
+            )
+            result = await session.execute(query)
+            return result.mappings().all()

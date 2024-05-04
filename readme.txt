@@ -36,3 +36,8 @@ pip install passlib python-jose -- устанавливаем библотеки
 
 --- Создаем config.py в корне ПРИЛОЖЕНИЯ
 --- Создаем .env в корне ПРОЕКТА где храним чувствительные данные
+
+
+************* ЗАПУСК CELERY *************
+
+celery -A app.tasks.celery_config:celery_app worker --loglevel=INFO
