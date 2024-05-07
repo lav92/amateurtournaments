@@ -1,1 +1,31 @@
 {% extends "base.html" %}
+
+{% block content %}
+	<div class="overlay text-white text-center">
+            <h2 class="display-4 mb-5">Below you can view name and description of enemies</h2>
+        </div>
+{% endblock %}
+
+{% block about %}
+        <div class="container">
+        <div class="row mt-5">
+
+            <table class="table table-borderless v-align-center">
+                <tbody>
+                {% for team in enemy %}
+                    <tr>
+                        <td>
+                            <p class="font-weight-bold text-muted">{{ team.get("Team").title }}:</p>
+                        </td>
+                        <td>
+                            <p class="font-weight-bold text-muted">{{ team.get("Team").description }}</p>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+{% endblock %}

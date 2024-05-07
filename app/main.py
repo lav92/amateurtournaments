@@ -1,10 +1,10 @@
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 
-from fastapi_cache import FastAPICache
-from fastapi_cache.backends.redis import RedisBackend
+# from fastapi_cache import FastAPICache
+# from fastapi_cache.backends.redis import RedisBackend
 
-from redis import asyncio as aioredis
+# from redis import asyncio as aioredis
 
 from app.users.router import router as user_router
 from app.teams.router import router as team_router
@@ -45,7 +45,7 @@ async def login(request: Request):
     return templates.TemplateResponse(name='login.html', context={"request": request})
 
 
-@app.on_event("startup")
-async def startup():
-    redis = aioredis.from_url("redis://localhost")
-    FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
+# @app.on_event("startup")
+# async def startup():
+#     redis = aioredis.from_url("redis://localhost")
+#     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")

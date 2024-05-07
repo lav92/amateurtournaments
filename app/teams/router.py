@@ -132,10 +132,16 @@ async def invite_hard_support(
 @router.get('/all_filled_teams')
 async def all_filled_teams(
         request: Request,
+        user: Users = Depends(get_user),
 ):
-    res = await TeamDAO.get_filled_teams()
+    my_team = await TeamDAO.get_my_team(user)
+    res = await TeamDAO.get_filled_teams(my_team_id=my_team.id)
     print(res)
-    return res
+    return templates.TemplateResponse(name="teams.html", context={"request": request,
+                                                                  "team": my_team,
+                                                                  "user": user,
+                                                                  "enemy": res,
+                                                                  })
 
 
 # API URls

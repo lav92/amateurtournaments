@@ -47,7 +47,7 @@ class TeamDAO(BaseDAO):
             return team.scalar_one_or_none()
 
     @classmethod
-    async def get_filled_teams(cls):
+    async def get_filled_teams(cls, my_team_id: int):
         async with async_session_maker() as session:
             query = select(cls.model).filter(
                 and_(
@@ -57,6 +57,7 @@ class TeamDAO(BaseDAO):
                     cls.model.offlane > 0,
                     cls.model.support > 0,
                     cls.model.hard_support > 0,
+                    cls.model.id != my_team_id,
                 )
             )
             result = await session.execute(query)
