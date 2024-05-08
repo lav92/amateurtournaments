@@ -1,0 +1,56 @@
+version: "3"
+services:
+  db:
+    image: postgres:15
+    container_name: tournament_db
+    env_file:
+      - .env-non-dev
+    ports:
+      - 5433:5432
+
+  redis:
+    image: redis:7
+    container_name: redis_app
+
+  tournament:
+    image: tournament_image
+    build:
+      context: .
+    container_name: tournament_app
+    env_file:
+      - .env-non-dev
+    depends_on:
+      - db
+      - redis
+    command:
+      - "/tournament/docker/init.sh"
+    ports:
+      - 7777:8000
+
+  celery:
+    image: t_celery
+    build:
+      context: .
+    container_name: tournament_celery
+    command: ["/tournament/docker/celery.sh"]
+#    command: ["celery", "-A", "app.tasks.celery_config:celery_app", "worker", "&"]
+    env_file:
+      - .env-non-dev
+    depends_on:
+      - redis
+
+  flower:
+    image: t_flower
+    build:
+      context: .
+    container_name: tournament_flower
+#    command: ["/tournament/docker/flower.sh"]
+    command: ["celery", "-A", "celery", "flower"]
+    env_file:
+      - .env-non-dev
+    ports:
+      - 5556:5555
+    depends_on:
+      - tournament
+      - redis
+      - celery
