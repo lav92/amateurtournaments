@@ -5,6 +5,9 @@
 * FastApi
 * ORM - SQLalchemy
 * PostgreSQL
+* Aiohttp
+* Asyncio
+* SMTP
 * Redis(в данном проекте используется только в качестве брокера Celery)
 * Celery
 * Flower
