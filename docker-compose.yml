@@ -33,7 +33,6 @@ services:
       context: .
     container_name: tournament_celery
     command: ["/tournament/docker/celery.sh"]
-#    command: ["celery", "-A", "app.tasks.celery_config:celery_app", "worker", "&"]
     env_file:
       - .env-non-dev
     depends_on:
@@ -44,7 +43,6 @@ services:
     build:
       context: .
     container_name: tournament_flower
-#    command: ["/tournament/docker/flower.sh"]
     command: ["celery", "-A", "celery", "flower"]
     env_file:
       - .env-non-dev
